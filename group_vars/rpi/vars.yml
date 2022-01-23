@@ -1,0 +1,13 @@
+﻿userslist:
+  - name: robert
+    fullname: Robert van Reems
+    email: "robertreems@gmail.com"
+
+aptPackages:
+  - git # can be removed todo
+  - acl #fixes rpi issue https://github.com/georchestra/ansible/issues/55
+
+# sensitive data
+robert_password: "{{ vault_robert_password }}"
+ansible_become_pass: "{{ vault_master_password }}" # the sudo password for the local session.
+git_token: "{{ vault_git_token }}"

@@ -1,0 +1,25 @@
+﻿---
+- hosts: all
+
+  tasks:
+  - include_role:
+      name: apt-role
+    vars: 
+      aptPackagesToInstall: "{{ aptPackages }}"
+
+  - include_role:
+      name: usermanagement-role
+    vars:
+      user: "{{ item }}"
+    loop: "{{ userslist }}"
+
+  - include_role:
+      name: sshserver
+
+  - include_role:
+      name: development-userrole
+    vars:
+      user: "{{ outer_item }}"
+    loop: "{{ userslist }}"
+    loop_control:
+      loop_var: outer_item
