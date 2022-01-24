@@ -37,3 +37,38 @@
     ansible.builtin.git:
       repo: git@github.com:robertreems/pyhuect.git
       dest: /home/robert/pyhuect/
+    register: pyhuectservice
+
+  - name: Set systemctl service file
+    become: true
+    copy:
+      dest: /etc/systemd/system/pyhuect.service
+      content: |
+        [Unit]
+        Description=Roberts pyhue ct service
+        Requires=network.target
+
+        [Service]
+        Type=simple
+        User=robert
+        ExecStart=/usr/bin/python3 /home/robert/pyhuect/main.py
+
+        Restart=always
+        RestartSec=60
+
+        [Install]
+        WantedBy=multi-user.target
+    register: pyhuectservice
+
+  - name: Reload the systemd daemon
+    become: true
+    ansible.builtin.systemd:
+      daemon_reload: yes
+    when: pyhuectservice.changed
+
+  - name: (re)start the pyhuect.service
+    become: true
+    ansible.builtin.systemd:
+      name: pyhuect.service
+      state: restarted
+    when: pyhuectservice.changed
