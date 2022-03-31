@@ -8,6 +8,8 @@ aptPackages:
   - acl #fixes rpi issue https://github.com/georchestra/ansible/issues/55
   - vim
 
+hueIP: 10.0.0.2
+
 # sensitive data
 robert_password: "{{ vault_robert_password }}"
 ansible_become_pass: "{{ vault_master_password }}" # the sudo password for the local session.
