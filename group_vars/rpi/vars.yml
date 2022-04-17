@@ -7,6 +7,10 @@ aptPackages:
   - git # can be removed todo
   - acl #fixes rpi issue https://github.com/georchestra/ansible/issues/55
   - vim
+  - screen
+
+pipPackages:
+  - rvr-base
 
 hueIP: 10.0.0.2
 

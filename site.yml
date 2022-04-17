@@ -28,3 +28,8 @@
       name: pyhuectinstall
     vars:
       user: robert
+
+  - include_role:
+      name: pip-role
+    vars:
+      pipPackagesToInstall: "{{ pipPackages }}"
