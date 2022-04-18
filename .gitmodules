@@ -16,3 +16,6 @@
 [submodule "roles/pip-role"]
 	path = roles/pip-role
 	url = git@github.com:rvransible/pip-role.git
+[submodule "roles/rvr-powersurpluslogger-role"]
+	path = roles/rvr-powersurpluslogger-role
+	url = git@github.com:rvransible/rvr-powersurpluslogger-role.git

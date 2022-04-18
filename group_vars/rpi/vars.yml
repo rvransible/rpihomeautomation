@@ -10,11 +10,18 @@ aptPackages:
   - screen
 
 pipPackages:
-  - rvr-base
+  - rvr-base==0.0.3
 
 hueIP: 10.0.0.2
+
+# Home wizzard P1 dongle IP:
+hwip: 10.0.0.41
+
+# Azure Log analytics
+log_analytics_workspace_id: 7756814b-7720-4b6d-9fb6-0aa03fe97658
 
 # sensitive data
 robert_password: "{{ vault_robert_password }}"
 ansible_become_pass: "{{ vault_master_password }}" # the sudo password for the local session.
 git_token: "{{ vault_git_token }}"
+log_analytics_primary_key: "{{ log_analytics_primary_key }}"
