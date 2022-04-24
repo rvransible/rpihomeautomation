@@ -28,3 +28,13 @@
       name: pyhuectinstall
     vars:
       user: robert
+
+  - include_role:
+      name: pip-role
+    vars:
+      pipPackagesToInstall: "{{ pipPackages }}"
+
+  - include_role:
+      name: rvr-powersurpluslogger-role
+    vars:
+      user: robert
