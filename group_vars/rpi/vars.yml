@@ -16,7 +16,7 @@ pipPackages:
 hueIP: 10.0.0.3
 
 # Home wizzard P1 dongle IP:
-hwip: 10.0.0.41
+hwip: 10.0.0.4
 
 # Azure Log analytics
 log_analytics_workspace_id: 7756814b-7720-4b6d-9fb6-0aa03fe97658
