@@ -10,7 +10,7 @@ aptPackages:
   - screen
 
 pipPackages:
-  - rvr-base==0.0.3
+  - rvr-base==1.0.0
 
 # Hue bridge dongle:
 hueIP: 10.0.0.3
