@@ -32,7 +32,6 @@ workspace_id: "{{ vault_workspace_id }}"
 primary_key: "{{ vault_primary_key }}"
 powerstatistics_workspace_id: "{{ vault_powerstatistics_workspace_id }}"
 powerstatistics_primary_key: "{{ vault_powerstatistics_primary_key }}"
-hwip: '10.0.0.4'
 tenant: "{{ vault_tenant }}"
 service_principal_loganalyticsreader_id: "{{ vault_service_principal_loganalyticsreader_id }}"
 service_principal_loganalyticsreader_secret: "{{ vault_service_principal_loganalyticsreader_secret }}"
