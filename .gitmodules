@@ -19,3 +19,6 @@
 [submodule "roles/rvr-powersurpluslogger-role"]
 	path = roles/rvr-powersurpluslogger-role
 	url = git@github.com:rvransible/rvr-powersurpluslogger-role.git
+[submodule "roles/configurationstore"]
+	path = roles/configurationstore
+	url = git@github.com:rvransible/configurationstore.git

@@ -12,6 +12,9 @@
     vars:
       user: "{{ item }}"
     loop: "{{ userslist }}"
+  
+  - include_role:
+      name: configurationstore
 
   - include_role:
       name: sshserver
