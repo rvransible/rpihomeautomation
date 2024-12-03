@@ -10,6 +10,9 @@
 
   - include_role:
       name: joplinServer
+
+  - include_role:
+      name: nginx
   
   # - include_role:
   #     name: development-userrole
