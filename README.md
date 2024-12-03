@@ -14,8 +14,7 @@ Connect the USB-drive to the computer and with rpi-imager select the raspberry P
 
 ### Apply the Ansible playbook
 
-Run `ansible-playbook site.yml -K`
-
+Run `ansible-playbook site.yml`
 
 ## General project information
 The [inventory](inventory) should contain only to the RPI hosts nebula IP-address.
