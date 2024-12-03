@@ -7,6 +7,7 @@ This is the project for managing my RPI 5. This will host:
 
 ### On fedora
 Install rpi-manager `sudo yum install rpi-imager`
+Install de docker_compose ansible module `ansible-galaxy collection install community.docker`
 
 ### On the RPI
 

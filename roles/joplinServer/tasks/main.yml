@@ -1,0 +1,114 @@
+---
+# tasks file for joplinServer
+# https://www.vultr.com/docs/how-to-host-a-joplin-server-with-docker-on-ubuntu/
+- name: Create Joplin server folder
+  file:
+    path: /opt/joplin
+    state: "directory"
+
+- name: Add Docker's official GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Set up the Docker repository
+  copy:
+    content: |
+      deb [arch=arm64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
+    dest: /etc/apt/sources.list.d/docker.list
+
+- name: Install Docker CE
+  apt:
+    update_cache: yes
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: latest
+
+- name: Install Docker Compose
+  shell: >
+    curl -L "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-$(uname -s)-$(uname -m)"
+    -o /usr/local/bin/docker-compose
+  args:
+    executable: /bin/bash
+
+- name: Set correct permissions for Docker Compose
+  file:
+    path: /usr/local/bin/docker-compose
+    mode: '0755'
+    state: file
+
+- name: Creating the docker compose file
+  copy:
+    dest: "/opt/joplin/docker-compose.yml"
+    content: |
+      version: '3'
+
+      services:
+        db:
+          image: postgres:13
+          volumes: 
+            - ./data/postgres:/var/lib/postgresql/data
+          ports:
+            - "5432:5432"
+          restart: always
+          environment:
+            - POSTGRES_PASSWORD=${{ vault_joplin_postgresql }}
+            - POSTGRES_USER=joplin-user
+            - POSTGRES_DB=joplindb
+        app:
+          image: etechonomy/joplin-server:latest
+          container_name: joplin-server
+          depends_on:
+            - db
+          ports:
+            - "8080:8080"
+          restart: always
+          environment:
+            - APP_PORT=8080
+            - APP_BASE_URL=http://{{ nebulaVPNIp }}:8080
+            - DB_CLIENT=pg
+            - POSTGRES_PASSWORD=${{ vault_joplin_postgresql }}
+            - POSTGRES_DATABASE=joplindb
+            - POSTGRES_USER=joplin-user
+            - POSTGRES_PORT=5432
+            - POSTGRES_HOST=db
+
+# - name: Create Joplin data directory
+#   file:
+#     path: "{{ data_dir }}"
+#     state: directory
+#     owner: root
+#     group: root
+#     mode: "0755"
+
+- name: Start Joplin server with Docker Compose
+  shell: docker-compose up -d
+  args:
+    chdir: /opt/joplin
+
+# NGINX config
+- name: Creating the nginx config file
+  copy:
+    dest: "/etc/nginx/conf.d/joplin-server.conf"
+    content: |
+      server {
+        server_name joplin.reems.org {{ nebulaVPNIp }};  # Voeg het IP-adres toe aan de server_name
+
+        client_max_body_size 100M;
+
+        error_log /var/log/nginx/joplin-server.error;
+
+        location / {
+            proxy_pass http://127.0.0.1:8080;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # Zorg ervoor dat de X-Forwarded-For-header goed is ingesteld
+            proxy_set_header X-Forwarded-Proto $scheme;  # Voeg deze regel toe om het juiste protocol door te geven
+        }
+
+        listen 80;
+        listen [::]:80;
+      }
+  notify: Enable and ensure nginx is started

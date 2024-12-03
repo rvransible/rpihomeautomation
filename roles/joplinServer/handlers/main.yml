@@ -1,0 +1,8 @@
+---
+# handlers file for joplinServer
+- name: Enable and ensure nginx is started
+  become: true
+  systemd:
+    name: nginx
+    enabled: yes
+    state: restarted
