@@ -67,7 +67,7 @@
           restart: always
           environment:
             - APP_PORT=8080
-            - APP_BASE_URL=http://{{ nebulaVPNIp }}:8080
+            - APP_BASE_URL=http://{{ nebulaVPNIp }}
             - DB_CLIENT=pg
             - POSTGRES_PASSWORD=${{ vault_joplin_postgresql }}
             - POSTGRES_DATABASE=joplindb
@@ -106,6 +106,9 @@
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # Zorg ervoor dat de X-Forwarded-For-header goed is ingesteld
             proxy_set_header X-Forwarded-Proto $scheme;  # Voeg deze regel toe om het juiste protocol door te geven
+            proxy_set_header X-Forwarded-Port $server_port;
+            proxy_set_header X-Forwarded-Host $host;
+            client_max_body_size 400M;
         }
 
         listen 80;
