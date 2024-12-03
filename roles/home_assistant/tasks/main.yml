@@ -11,6 +11,14 @@
     name: "{{ home_assistant_image }}"
     source: pull
 
+- name: Set Home assistant configuration
+  blockinfile:
+    path: "{{ home_assistant_config_dir }}/configuration.yaml"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: external_url"
+    block: |
+      
+  notify: Restart Home Assistant
+
 - name: Run the Home Assistant container
   docker_container:
     name: home_assistant

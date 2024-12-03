@@ -1,2 +1,7 @@
 ---
 # handlers file for home_assistant
+- name: Restart Home Assistant
+  become: true
+  docker_container:
+    name: home_assistant
+    state: started

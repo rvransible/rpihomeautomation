@@ -2,14 +2,21 @@
 # tasks file for nginx
 - name: Creating the nginx config file
   copy:
-    dest: "/etc/nginx/conf.d/joplin-server.conf"
+    dest: "/etc/nginx/conf.d/http.conf"
     content: |
       server {
-        server_name joplin.reems.org {{ nebulaVPNIp }};  # Voeg het IP-adres toe aan de server_name
+        server_name reems.org {{ nebulaVPNIp }};  # Voeg het IP-adres toe aan de server_name
 
         client_max_body_size 100M;
 
-        error_log /var/log/nginx/joplin-server.error;
+        error_log /var/log/nginx/http.error;
+
+        # Home Assistant als standaard locatie (root)
+        location / {
+            proxy_pass http://127.0.0.1:8123;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+        }
 
         location /joplin/ {
             proxy_pass http://127.0.0.1:8080/;
@@ -21,8 +28,5 @@
             proxy_set_header X-Forwarded-Host $host;
             client_max_body_size 400M;
         }
-
-        listen 80;
-        listen [::]:80;
       }
   notify: Enable and ensure nginx is started
