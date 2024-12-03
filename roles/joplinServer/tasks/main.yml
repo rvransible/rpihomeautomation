@@ -67,7 +67,7 @@
           restart: always
           environment:
             - APP_PORT=8080
-            - APP_BASE_URL=http://{{ nebulaVPNIp }}
+            - APP_BASE_URL=http://{{ nebulaVPNIp }}/joplin
             - DB_CLIENT=pg
             - POSTGRES_PASSWORD=${{ vault_joplin_postgresql }}
             - POSTGRES_DATABASE=joplindb

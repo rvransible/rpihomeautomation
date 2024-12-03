@@ -2,6 +2,7 @@
 
 This is the project for managing my RPI 5. This will host:
 - Joplin server
+- Home assistant
 
 ## Setup of the RPI-5
 
