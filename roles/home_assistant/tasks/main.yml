@@ -1,0 +1,23 @@
+---
+# tasks file for home_assistant
+- name: Create Home Assistant configuration directory
+  file:
+    path: "{{ home_assistant_config_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Pull the Home Assistant Docker image
+  docker_image:
+    name: "{{ home_assistant_image }}"
+    source: pull
+
+- name: Run the Home Assistant container
+  docker_container:
+    name: home_assistant
+    image: "{{ home_assistant_image }}"
+    restart_policy: always
+    network_mode: host
+    volumes:
+      - "{{ home_assistant_config_dir }}:/config"
+    env:
+      TZ: "{{ timezone }}"

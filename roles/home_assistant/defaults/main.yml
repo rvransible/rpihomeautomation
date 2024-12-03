@@ -1,0 +1,6 @@
+---
+# defaults file for home_assistant
+
+home_assistant_image: "ghcr.io/home-assistant/home-assistant:stable"
+home_assistant_config_dir: "/srv/homeassistant"
+timezone: "Europe/Amsterdam"
