@@ -16,19 +16,6 @@
 
   - include_role:
       name: nginx
-  
-  # - include_role:
-  #     name: development-userrole
-  #   vars:
-  #     user: "{{ outer_item }}"
-  #   loop: "{{ userslist }}"
-  #   loop_control:
-  #     loop_var: outer_item
-
-  # - include_role:
-  #     name: pyhuectinstall
-  #   vars:
-  #     user: robert
 
   # - include_role:
   #     name: pip-role
