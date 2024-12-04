@@ -1,24 +1,3 @@
 [submodule "roles/apt-role"]
 	path = roles/apt-role
 	url = git@github.com:rvransible/apt-role.git
-[submodule "roles/sshserver"]
-	path = roles/sshserver
-	url = git@github.com:rvransible/sshserver.git
-[submodule "roles/development-userrole"]
-	path = roles/development-userrole
-	url = git@github.com:rvransible/development-userrole.git
-[submodule "roles/usermanagement-role"]
-	path = roles/usermanagement-role
-	url = git@github.com:rvransible/usermanagement-role.git
-[submodule "roles/pyhuectinstall"]
-	path = roles/pyhuectinstall
-	url = git@github.com:rvransible/pyhuectinstall.git
-[submodule "roles/pip-role"]
-	path = roles/pip-role
-	url = git@github.com:rvransible/pip-role.git
-[submodule "roles/rvr-powersurpluslogger-role"]
-	path = roles/rvr-powersurpluslogger-role
-	url = git@github.com:rvransible/rvr-powersurpluslogger-role.git
-[submodule "roles/configurationstore"]
-	path = roles/configurationstore
-	url = git@github.com:rvransible/configurationstore.git

@@ -1,37 +1,15 @@
-userslist:
-  - name: robert
-    fullname: Robert van Reems
-    email: "robertreems@gmail.com"
-
 aptPackages:
-  - git # can be removed todo
-  - acl #fixes rpi issue https://github.com/georchestra/ansible/issues/55
-  - vim
   - screen
+  - nginx
+  - docker-compose
+  - vim
 
-pipPackages:
-  - rvr-base==1.1.1
-
-# Hue bridge dongle:
-hueIP: 10.0.0.2
-
-# Home wizzard P1 dongle IP:
-hwip: 10.0.0.4
-
-# Azure Log analytics
-log_analytics_workspace_id: 7756814b-7720-4b6d-9fb6-0aa03fe97658
+nebulaVPNIp: 192.168.100.17
+docker_compose_version: "v2.20.2"
+data_dir: "/opt/joplin/data"
+ports:
+  - "22300:22300"  # Joplin Server API
+  - "22301:22301"  # Joplin Sync Target
 
 # sensitive data
-robert_password: "{{ vault_robert_password }}"
 ansible_become_pass: "{{ vault_master_password }}" # the sudo password for the local session.
-git_token: "{{ vault_git_token }}"
-
-# Local configstore
-configstorepath: /etc/rvr/config.ini
-workspace_id: "{{ vault_workspace_id }}"
-primary_key: "{{ vault_primary_key }}"
-powerstatistics_workspace_id: "{{ vault_powerstatistics_workspace_id }}"
-powerstatistics_primary_key: "{{ vault_powerstatistics_primary_key }}"
-tenant: "{{ vault_tenant }}"
-service_principal_loganalyticsreader_id: "{{ vault_service_principal_loganalyticsreader_id }}"
-service_principal_loganalyticsreader_secret: "{{ vault_service_principal_loganalyticsreader_secret }}"

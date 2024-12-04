@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  become: true
 
   tasks:
   - include_role:
@@ -8,36 +9,10 @@
       aptPackagesToInstall: "{{ aptPackages }}"
 
   - include_role:
-      name: usermanagement-role
-    vars:
-      user: "{{ item }}"
-    loop: "{{ userslist }}"
-  
-  - include_role:
-      name: configurationstore
+      name: joplinServer
 
   - include_role:
-      name: sshserver
+      name: home_assistant
 
   - include_role:
-      name: development-userrole
-    vars:
-      user: "{{ outer_item }}"
-    loop: "{{ userslist }}"
-    loop_control:
-      loop_var: outer_item
-
-  - include_role:
-      name: pyhuectinstall
-    vars:
-      user: robert
-
-  - include_role:
-      name: pip-role
-    vars:
-      pipPackagesToInstall: "{{ pipPackages }}"
-
-  - include_role:
-      name: rvr-powersurpluslogger-role
-    vars:
-      user: robert
+      name: nginx
