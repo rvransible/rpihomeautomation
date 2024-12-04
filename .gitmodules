@@ -4,9 +4,6 @@
 [submodule "roles/sshserver"]
 	path = roles/sshserver
 	url = git@github.com:rvransible/sshserver.git
-[submodule "roles/development-userrole"]
-	path = roles/development-userrole
-	url = git@github.com:rvransible/development-userrole.git
 [submodule "roles/usermanagement-role"]
 	path = roles/usermanagement-role
 	url = git@github.com:rvransible/usermanagement-role.git
