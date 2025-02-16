@@ -1,0 +1,6 @@
+---
+# defaults file for searxng
+
+searxng_config_dir: "/opt/searxng/config"
+searxng_image: "searxng/searxng:latest"
+timezone: "UTC"

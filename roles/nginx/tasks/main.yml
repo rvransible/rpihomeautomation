@@ -5,7 +5,7 @@
     dest: "/etc/nginx/conf.d/http.conf"
     content: |
       server {
-        server_name reems.org {{ nebulaVPNIp }};  # Voeg het IP-adres toe aan de server_name
+        server_name rpi5.reems.org {{ nebulaVPNIp }};  # Voeg het IP-adres toe aan de server_name
 
         client_max_body_size 100M;
 
@@ -28,5 +28,21 @@
             proxy_set_header X-Forwarded-Host $host;
             client_max_body_size 400M;
         }
+
+        location /searxng/ {
+            proxy_pass http://127.0.0.1:8081/;  # Update to the new port
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  # Zorg ervoor dat de X-Forwarded-For-header goed is ingesteld
+            proxy_set_header X-Forwarded-Proto $scheme;  # Voeg deze regel toe om het juiste protocol door te geven
+            proxy_set_header X-Forwarded-Port $server_port;
+            proxy_set_header X-Forwarded-Host $host;
+            client_max_body_size 400M;
+            proxy_http_version 1.1;
+            proxy_set_header Connection "keep-alive";
+
+        }
       }
-  notify: Enable and ensure nginx is started
+  notify: 
+  - Enable and ensure nginx is started
+  - Restart nginx

@@ -16,3 +16,6 @@
 
   - include_role:
       name: nginx
+
+  - include_role:
+        name: searxng

@@ -1,0 +1,72 @@
+---
+# tasks file for searxng
+- name: Create SearXNG directory
+  file:
+    path: /opt/searxng
+    state: directory
+    mode: '0755'
+
+- name: Copy docker-compose file
+  copy:
+    dest: /opt/searxng/docker-compose.yaml
+    content: |
+      services:
+        redis:
+          container_name: redis
+          image: docker.io/valkey/valkey:8-alpine
+          command: valkey-server --save 30 1 --loglevel warning
+          restart: unless-stopped
+          networks:
+            - searxng
+          volumes:
+            - valkey-data2:/data
+          cap_drop:
+            - ALL
+          cap_add:
+            - SETGID
+            - SETUID
+            - DAC_OVERRIDE
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "1m"
+              max-file: "1"
+
+        searxng:
+          container_name: searxng
+          image: docker.io/searxng/searxng:latest
+          restart: unless-stopped
+          networks:
+            - searxng
+          ports:
+            - "127.0.0.1:8081:8080"
+          volumes:
+            - ./searxng:/etc/searxng:rw
+          environment:
+            - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/searxng
+            - UWSGI_WORKERS=${SEARXNG_UWSGI_WORKERS:-4}
+            - UWSGI_THREADS=${SEARXNG_UWSGI_THREADS:-4}
+          cap_drop:
+            - ALL
+          cap_add:
+            - CHOWN
+            - SETGID
+            - SETUID
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "1m"
+              max-file: "1"
+
+      networks:
+        searxng:
+
+      volumes:
+        caddy-data:
+        caddy-config:
+        valkey-data2:
+
+- name: Start SearXNG with Docker Compose
+  command:
+    cmd: docker compose up -d
+    chdir: /opt/searxng

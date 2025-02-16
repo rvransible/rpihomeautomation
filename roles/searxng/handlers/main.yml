@@ -1,0 +1,7 @@
+---
+# handlers file for searxng
+
+- name: Restart SearxNG
+  docker_container:
+    name: searxng
+    state: started
